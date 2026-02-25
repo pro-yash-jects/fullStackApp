@@ -3,11 +3,13 @@ import jwt from 'jsonwebtoken'
 export const authenticate = async (req,res,next)=>{
     const authHeader = req.headers.authorization;
     if(!authHeader){
-        res.json({message: "Token not found"});
+        res.status(400).json({message: "Token not found"});
+        console.log("token wasn't provided")
         return;
     }
     const token = authHeader.split(' ')[1];
-    const decode = jwt.verify(token, process.env.JWT_SECRET);
+    try{const decode = jwt.verify(token, process.env.JWT_SECRET);}
+    catch(err){res.status(400).send("invalid signature"); return}
     req.user = decode;
     next();
 }
