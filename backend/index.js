@@ -5,10 +5,11 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import stockRoutes from "./routes/stockRoutes.js";
 import {authenticate, authorizeAdmin} from "./middleware/authMiddleWare.js"
-
+import cors from "cors";
 //initalisation
 const app = express()
 app.use(express.json())
+app.use(cors())
 
 //env
 dotenv.config();
@@ -21,7 +22,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/stocks', stockRoutes)
 
 // '/' route
-app.get('/', authenticate, (req, res) => {
+app.get('/', authenticate,authorizeAdmin ,(req, res) => {
     res.send("hello world");
 })
 

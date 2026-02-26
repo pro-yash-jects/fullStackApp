@@ -8,15 +8,22 @@ export const authenticate = async (req,res,next)=>{
         return;
     }
     const token = authHeader.split(' ')[1];
-    try{const decode = jwt.verify(token, process.env.JWT_SECRET);}
-    catch(err){res.status(400).send("invalid signature"); return}
-    req.user = decode;
+    try{
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decode;
+    }
+    catch(err){
+        res.status(400).send("invalid signature"); 
+        return}
+    
     next();
 }
 
 export const authorizeAdmin = async (req,res,next) =>{
     if (req.user.role !== "admin"){
         res.status(403).json({message:"Unauthorized"})
+        return;
     }
+    next();
     
 }

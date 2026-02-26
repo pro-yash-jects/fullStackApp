@@ -1,0 +1,6 @@
+> create /user/admin
+> create 
+> create /api/stocks/watchlist
+> create /api/transaction/placeorder
+
+> 

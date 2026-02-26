@@ -5,10 +5,10 @@ export const searchStock = async (req, res) => {
         return res.status(400).json({ error: "Invalid or empty stock symbol" });
     }
     try {
-        const response = await axios.get("https://finnhub.io/api/v1/quote", {
+        const response = await axios.get("https://api.twelvedata.com/quote", {
             params: {
                 symbol,
-                token : process.env.FINHUB_KEY
+                apikey : process.env.TWELVE_KEY
             }
         }
         )
