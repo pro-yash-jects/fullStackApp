@@ -1,16 +1,91 @@
-# React + Vite
+# TradeGate Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React trading application built with Vite, React, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Stock search and real-time quotes
+- User authentication (login/signup)
+- Trading dashboard
+- Watchlist management
+- Dark/Light theme toggle
+- Admin panel
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- Vite
+- React Router
+- Tailwind CSS
+- Axios
+- Recharts (for stock charts)
 
-## Expanding the ESLint configuration
+## Local Development
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Create a `.env` file (see `.env.example`):
+```
+VITE_API_URL=/api
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+The app will run on `http://localhost:5173` and proxy API requests to `http://localhost:3000`.
+
+## Building for Production
+
+```bash
+npm run build
+```
+
+This creates a production build in the `dist` folder.
+
+## Deploying to Vercel
+
+1. Push your code to GitHub
+
+2. Import your repository in Vercel
+
+3. Configure environment variables in Vercel dashboard:
+   - `VITE_API_URL` = Your backend API URL (e.g., `https://your-backend.herokuapp.com/api`)
+
+4. Deploy! Vercel will automatically:
+   - Run `npm run build`
+   - Deploy the `dist` folder
+   - Handle client-side routing (configured in `vercel.json`)
+
+## Environment Variables
+
+- `VITE_API_URL`: Backend API base URL
+  - Local: `/api` (uses Vite proxy)
+  - Production: Full backend URL (e.g., `https://api.example.com/api`)
+
+## Project Structure
+
+```
+src/
+├── api/          # Axios configuration
+├── components/   # Reusable components
+├── context/      # React context (Auth, Theme)
+├── pages/        # Page components
+├── App.jsx       # Main app component
+└── main.jsx      # App entry point
+```
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+## Notes
+
+This is a student project focused on simplicity and learning. Not all features are production-grade.

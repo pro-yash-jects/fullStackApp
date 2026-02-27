@@ -25,32 +25,15 @@ export default function StockCard({ symbol, data }) {
 
   useEffect(() => {
     fetchChart();
-
   }, [symbol, chartDays]);
 
   const fetchChart = async () => {
     setChartLoading(true);
     try {
       const res = await api.get(`/stocks/history/${symbol}?days=${chartDays}`);
-      console.log(res)
       setChartData(res.data || []);
     } catch {
-      // Backend endpoint may not exist yet — generate placeholder from current data
-      // const points = [];
-      // const base = data.pc || data.c;
-      // for (let i = chartDays; i >= 0; i--) {
-      //   const d = new Date();
-      //   d.setDate(d.getDate() - i);
-      //   const variance = (Math.random() - 0.5) * (base * 0.04);
-      //   points.push({
-      //     date: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-      //     price: +(base + variance).toFixed(2),
-      //   });
-      // }
-      // Set last point to current price
-      // points[points.length - 1].price = data.c;
-      // setChartData(points);
-      console.log("Error fetching chart data");
+      setChartData([]);
     } finally {
       setChartLoading(false);
     }

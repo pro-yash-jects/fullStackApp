@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import api from '../api/axios';
 
 const AuthContext = createContext(null);
@@ -9,6 +9,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [watchlist, setWatchlist] = useState([]);
 
+  // Load user from localStorage on mount
   useEffect(() => {
     const savedToken = localStorage.getItem('token');
     const savedUser = localStorage.getItem('user');
@@ -19,19 +20,22 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  const fetchWatchlist = useCallback(async () => {
+  // Fetch watchlist when user logs in
+  useEffect(() => {
+    if (token) {
+      fetchWatchlist();
+    }
+  }, [token]);
+
+  const fetchWatchlist = async () => {
     if (!token) return;
     try {
       const res = await api.get('/watchlist');
       setWatchlist(res.data.watchList || []);
     } catch {
-      // backend endpoint may not exist yet
+      // Backend endpoint may not exist yet
     }
-  }, [token]);
-
-  useEffect(() => {
-    if (token) fetchWatchlist();
-  }, [token, fetchWatchlist]);
+  };
 
   const addToWatchlist = async (symbol) => {
     try {
