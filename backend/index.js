@@ -6,6 +6,11 @@ import authRoutes from "./routes/authRoutes.js";
 import stockRoutes from "./routes/stockRoutes.js";
 import {authenticate, authorizeAdmin} from "./middleware/authMiddleWare.js"
 import cors from "cors";
+
+//env initalisation
+dotenv.config();
+const env = process.env;
+
 //initalisation
 const app = express()
 app.use(express.json())
@@ -14,10 +19,6 @@ app.use(cors(
         origin:process.env.FRONTEND
     }
 ))
-
-//env
-dotenv.config();
-const env = process.env;
 
 //connecting db
 connectDB();
