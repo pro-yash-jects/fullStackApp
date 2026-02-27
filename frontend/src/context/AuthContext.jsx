@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
   const fetchWatchlist = async () => {
     if (!token) return;
     try {
-      const res = await api.get('/watchlist');
+      const res = await api.get('/stocks/watchlist');
       setWatchlist(res.data.watchList || []);
     } catch {
       // Backend endpoint may not exist yet
@@ -39,7 +39,7 @@ export function AuthProvider({ children }) {
 
   const addToWatchlist = async (symbol) => {
     try {
-      await api.post('/watchlist', { symbol });
+      await api.post('/stocks/watchlist', { symbol });
       setWatchlist((prev) => [...new Set([...prev, symbol])]);
     } catch (err) {
       throw err;
@@ -48,7 +48,7 @@ export function AuthProvider({ children }) {
 
   const removeFromWatchlist = async (symbol) => {
     try {
-      await api.delete(`/watchlist/${symbol}`);
+      await api.delete(`/stocks/watchlist/${symbol}`);
       setWatchlist((prev) => prev.filter((s) => s !== symbol));
     } catch (err) {
       throw err;
